@@ -1,0 +1,42 @@
+{
+  "name": "detroitnowbot",
+  "version": "0.0.0",
+  "description": "Telegram Bot for DetroitNow",
+  "main": "dist/server.js",
+  "scripts": {
+    "build:min": "npm run build:server;",
+    "build:server": "babel src/  --out-dir dist"
+  },
+  "author": "Mike",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0",
+      "react"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ]
+  },
+  "dependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.10.4",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-runtime": "^6.9.2",
+    "babelify": "^7.3.0",
+    "node-telegram-bot-api": "^0.23.3",
+    "request": "^2.72.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.0.5",
+    "eslint": "^2.13.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.9.2",
+    "eslint-plugin-jsx-a11y": "^1.5.3",
+    "eslint-plugin-react": "^5.2.2"
+  }
+}
