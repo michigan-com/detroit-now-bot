@@ -10,7 +10,7 @@ const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
 logger('Bot created');
 
 bot.onText(/\/top/, (msg) => {
-  const fromId = msg.from.id;
+  const fromId = msg.chat.id;
 
   async function top() {
     const articles = await getTopArticles();
@@ -32,7 +32,7 @@ bot.onText(/\/top/, (msg) => {
 });
 
 bot.onText(/\/recent/, (msg) => {
-  const fromId = msg.from.id;
+  const fromId = msg.chat.id;
 
   async function recent() {
     const articles = await getRecentArticles();
