@@ -16,9 +16,9 @@ export function getTopArticles() {
   });
 }
 
-export function getRecentArticles() {
+export function getRecentArticles(limit = 10) {
   return new Promise((resolve, reject) => {
-    request('https://api.michigan.com/v1/news/?limit=10', (err, resp, body) => {
+    request(`https://api.michigan.com/v1/news/?limit=${limit}`, (err, resp, body) => {
       if (err) reject(err);
       try {
         const articles = JSON.parse(body).articles;
