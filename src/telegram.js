@@ -3,9 +3,13 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { getTopArticles, getRecentArticles } from './core';
 
-const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
+import debug from 'debug';
 
-bot.on(/\/top/, (msg) => {
+const logger = debug('app:telegram');
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, { polling: true });
+logger('Bot created');
+
+bot.onText(/\/top/, (msg) => {
   const fromId = msg.from.id;
 
   async function top() {
@@ -13,10 +17,13 @@ bot.on(/\/top/, (msg) => {
 
     const articleMessage = [];
     for (const article of articles) {
-      articleMessage.push(`${article.headline}\n\nReaders: ${article.visits}\nLink: https://detroitnow.io/article/${article.article_id}`);
+      if (articleMessage.length === 5) break;
+      articleMessage.push(`${article.headline}\nReaders: ${article.visits}\nLink: https://detroitnow.io/article/${article.article_id}`);
     }
 
-    bot.sendMessage(fromId, `Top Articles\n\n\n${articleMessage.join('\n\n')}`);
+    bot.sendMessage(fromId, `Top Articles\n\n\n${articleMessage.join('\n\n')}`, {
+      disable_web_page_preview: true,
+    });
   }
 
   top().catch((e) => {
@@ -24,7 +31,7 @@ bot.on(/\/top/, (msg) => {
   });
 });
 
-bot.on(/\/recent/, (msg) => {
+bot.onText(/\/recent/, (msg) => {
   const fromId = msg.from.id;
 
   async function recent() {
@@ -37,7 +44,9 @@ bot.on(/\/recent/, (msg) => {
 
       articleMessage.push(`${article.headline}\nhttps://detroitnow.io/article/${article.article_id}`);
     }
-    bot.sendMessage(fromId, `Recent Articles: ${articleMessage.join('\n\n')}`);
+    bot.sendMessage(fromId, `Recent Articles:\n\n${articleMessage.join('\n\n')}`, {
+      disable_web_page_preview: true,
+    });
   }
 
   recent().catch((e) => {
